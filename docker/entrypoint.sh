@@ -1,6 +1,7 @@
 #!/bin/bash
 
 php artisan migrate --force
+php artisan db:seed --force
 # Khởi động PHP-FPM
 php-fpm -D
 
