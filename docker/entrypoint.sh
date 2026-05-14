@@ -1,5 +1,6 @@
 #!/bin/bash
 
+php artisan migrate --force
 # Khởi động PHP-FPM
 php-fpm -D
 
