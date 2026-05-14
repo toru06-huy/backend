@@ -1,0 +1,23 @@
+# Chặn các thư mục thư viện cục bộ (để Docker tự cài bản Linux)
+vendor/
+node_modules/
+
+# Chặn các file cấu hình cá nhân
+.env
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+
+# Chặn các file hệ điều hành và IDE
+.git/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Chặn log và temp
+storage/logs/*.log
+storage/framework/views/*.php
+storage/framework/sessions/*
+storage/framework/cache/data/*
