@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login']);
+
 Route::get('/utilities', [\App\Http\Controllers\UtilityController::class, 'getAllUtilities']);
 Route::get('/utilities/{id}', [\App\Http\Controllers\UtilityController::class, 'getUtilityDetail']);
 Route::post('/utilities', [\App\Http\Controllers\UtilityController::class, 'createUtility']);
