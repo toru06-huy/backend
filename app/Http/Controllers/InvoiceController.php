@@ -61,7 +61,12 @@ class InvoiceController extends Controller
                 'message' => 'Tiện ích không tồn tại'
             ], 404);
         }
-
+        if($contract->room_id !== $utility->room_id){
+            return response()->json([
+                'success' => false,
+                'message' => 'Hợp đồng và tiện ích không cùng phòng'
+            ], 400);
+        }
         $invoice = Invoice::create($validatedData);
 
         return response()->json([
