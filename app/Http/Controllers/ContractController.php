@@ -119,6 +119,7 @@ class ContractController extends Controller
                 'message' => 'Không tìm thấy hợp đồng'
             ], 404);
         }
+        
         $validatedData = $request->validate([
             'tenant_id'      => 'sometimes|exists:tenants,id',
             'room_id'        => 'sometimes|exists:rooms,id',
