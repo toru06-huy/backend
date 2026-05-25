@@ -97,4 +97,5 @@ class TenantController extends Controller
             'message' => 'Người thuê đã được xóa thành công'
         ], 200);
     }
+    
 }
