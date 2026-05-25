@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('full_name')->nullable();
             $table->string('phone')->nullable();
-            $table->string('identity_card')->nullable()->unique();
+            $table->string('identity_card')->nullable();
             $table->string('address');
             $table->timestamps();
         });
