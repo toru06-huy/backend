@@ -13,7 +13,14 @@ Route::get('/contracts/{id}', [\App\Http\Controllers\ContractController::class, 
 
 Route::get('/rooms', [\App\Http\Controllers\RoomController::class, 'getAllRooms']);
 Route::get('/rooms/{id}', [\App\Http\Controllers\RoomController::class, 'getRoomDetail']);
+Route::post('/rooms', [\App\Http\Controllers\RoomController::class, 'createRoom']);
+Route::put('/rooms/{id}', [\App\Http\Controllers\RoomController::class, 'updateRoom']); 
+Route::delete('/rooms/{id}', [\App\Http\Controllers\RoomController::class, 'deleteRoom']);
 
 Route::get('/tenants', [\App\Http\Controllers\TenantController::class, 'getAllTenants']);
 Route::get('/tenants/{id}', [\App\Http\Controllers\TenantController::class, 'getTenantDetail']);
+Route::post('/tenants', [\App\Http\Controllers\TenantController::class, 'createTenant']);
+Route::put('/tenants/{id}', [\App\Http\Controllers\TenantController::class, 'updateTenant']);
+Route::delete('/tenants/{id}', [\App\Http\Controllers\TenantController::class, 'deleteTenant']);
 
+//Test API12344

@@ -35,4 +35,66 @@ class TenantController extends Controller
             'data'    => $tenant
         ], 200);
     }
+    public function createTenant(Request $request)
+    {
+        $validatedData = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'identity_card' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+        ]);
+
+        $tenant = Tenant::create($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Người thuê đã được tạo thành công',
+            'data' => $tenant
+        ], 201);
+    }
+    public function updateTenant(Request $request, $id)
+    {
+        $tenant = Tenant::find($id);
+
+        if (!$tenant) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy người thuê'
+            ], 404);
+        }
+
+        $validatedData = $request->validate([
+            'full_name' => 'sometimes|required|string|max:255',
+            'phone' => 'sometimes|required|string|max:20',
+            'identity_card' => 'sometimes|required|string|max:20',
+            'address' => 'sometimes|required|string|max:255',
+        ]);
+
+        $tenant->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Người thuê đã được cập nhật thành công',
+            'data' => $tenant
+        ], 200);
+    }
+
+    public function deleteTenant($id)
+    {
+        $tenant = Tenant::find($id);
+
+        if (!$tenant) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy người thuê'
+            ], 404);
+        }
+
+        $tenant->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Người thuê đã được xóa thành công'
+        ], 200);
+    }
 }
