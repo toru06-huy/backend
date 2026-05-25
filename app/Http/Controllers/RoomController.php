@@ -36,10 +36,14 @@ class RoomController extends Controller
     }
     public function createRoom(request $request){
       $validatedData = $request->validate([
-        'room_number' => 'required|integer|max:5',
-        'price' => 'required|decimal:2',
+        'room_number' => 'required|integer|unique:rooms,room_number',
+        'price' => 'required|integer|min:0',
         'status' => 'required|in:available',
-      ]);
+      ],[
+        'room_number.unique' => 'Số phòng đã tồn tại, vui lòng nhập số khác.',
+        'price.min' => 'Giá phòng không được nhỏ hơn 0.',
+      ]
+      );
 
       $room = Room::create($validatedData);
 
@@ -60,10 +64,15 @@ class RoomController extends Controller
       }
 
       $validatedData = $request->validate([
-        'room_number' => 'sometimes|required|integer|max:5',
-        'price' => 'sometimes|required|decimal:2',
-        'status' => 'sometimes|required|in:available',
-      ]);
+        'room_number' => 'sometimes|required|integer|unique:rooms,room_number',
+        'price' => 'sometimes|required|integer|min:0',
+        'status' => 'sometimes|required|in:available,rented',
+      ],
+      [
+        'room_number.unique' => 'Số phòng đã tồn tại, vui lòng nhập số khác.',
+        'price.min' => 'Giá phòng không được nhỏ hơn 0.',
+      ]
+      );
 
       $room->update($validatedData);
 
