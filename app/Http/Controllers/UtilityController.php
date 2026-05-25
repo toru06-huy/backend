@@ -62,10 +62,10 @@ class UtilityController extends Controller
         }
 
         $room= Room::find($validatedData['room_id']);
-        if(!$room){
+        if(!$room || $room->status !== 'available'){
             return response()->json([
                 'success' => false,
-                'message' => 'Phòng không tồn tại'
+                'message' => 'Phòng không tồn tại hoặc phòng chưa ký hợp đồng'
             ], 404);
         }
 
