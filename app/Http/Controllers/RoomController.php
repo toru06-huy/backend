@@ -38,7 +38,7 @@ class RoomController extends Controller
       $validatedData = $request->validate([
         'room_number' => 'required|integer|max:5',
         'price' => 'required|decimal:2',
-        'status' => 'required|enum:available',
+        'status' => 'required|in:available',
       ]);
 
       $room = Room::create($validatedData);
@@ -60,9 +60,9 @@ class RoomController extends Controller
       }
 
       $validatedData = $request->validate([
-        'room_number' => 'integer|max:5',
-        'price' => 'decimal:2',
-        'status' => 'enum:available',
+        'room_number' => 'sometimes|required|integer|max:5',
+        'price' => 'sometimes|required|decimal:2',
+        'status' => 'sometimes|required|in:available',
       ]);
 
       $room->update($validatedData);
