@@ -10,6 +10,9 @@ Route::get('/invoices/{id}', [\App\Http\Controllers\InvoiceController::class, 'g
 
 Route::get('/contracts', [\App\Http\Controllers\ContractController::class, 'getAllContracts']);
 Route::get('/contracts/{id}', [\App\Http\Controllers\ContractController::class, 'getContractDetail']);
+Route::post('/contracts', [\App\Http\Controllers\ContractController::class, 'createContract']);
+Route::put('/contracts/{id}', [\App\Http\Controllers\ContractController::class, 'updateContract']);
+Route::delete('/contracts/{id}', [\App\Http\Controllers\ContractController::class, 'deleteContract']);
 
 Route::get('/rooms', [\App\Http\Controllers\RoomController::class, 'getAllRooms']);
 Route::get('/rooms/{id}', [\App\Http\Controllers\RoomController::class, 'getRoomDetail']);
@@ -23,4 +26,3 @@ Route::post('/tenants', [\App\Http\Controllers\TenantController::class, 'createT
 Route::put('/tenants/{id}', [\App\Http\Controllers\TenantController::class, 'updateTenant']);
 Route::delete('/tenants/{id}', [\App\Http\Controllers\TenantController::class, 'deleteTenant']);
 
-//Test API1234412121

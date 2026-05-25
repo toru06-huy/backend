@@ -14,6 +14,19 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(append: [
             \Illuminate\Http\Middleware\HandleCors::class,
         ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'rooms', 
+            'rooms/*',
+            'tenants', 
+            'tenants/*',
+            'contracts', 
+            'contracts/*',
+            'invoices', 
+            'invoices/*',
+            'utilities', 
+            'utilities/*', 
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
