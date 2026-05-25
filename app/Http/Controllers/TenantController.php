@@ -39,9 +39,12 @@ class TenantController extends Controller
     {
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'identity_card' => 'required|string|max:20',
+            'phone' => 'required|string|max:20|unique:tenants,phone',
+            'identity_card' => 'required|string|max:20|unique:tenants,identity_card',
             'address' => 'required|string|max:255',
+        ],[
+                'phone.unique' => 'Số điện thoại đã tồn tại, vui lòng nhập số khác.',
+                'identity_card.unique' => 'Số CMND/CCCD đã tồn tại, vui lòng nhập số khác.',
         ]);
 
         $tenant = Tenant::create($validatedData);
@@ -65,9 +68,12 @@ class TenantController extends Controller
 
         $validatedData = $request->validate([
             'full_name' => 'sometimes|required|string|max:255',
-            'phone' => 'sometimes|required|string|max:20',
-            'identity_card' => 'sometimes|required|string|max:20',
+            'phone' => 'sometimes|required|string|max:20|unique:tenants,phone',
+            'identity_card' => 'sometimes|required|string|max:20|unique:tenants,identity_card',
             'address' => 'sometimes|required|string|max:255',
+        ],[
+            'phone.unique' => 'Số điện thoại đã tồn tại, vui lòng nhập số khác.',
+            'identity_card.unique' => 'Số CMND/CCCD đã tồn tại, vui lòng nhập số khác.',
         ]);
 
         $tenant->update($validatedData);
