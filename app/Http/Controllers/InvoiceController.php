@@ -106,6 +106,13 @@ class InvoiceController extends Controller
             ], 404);
         }
 
+        if ($invoice->status === 'paid' && $validatedData['status'] === 'unpaid') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không thể chuyển trạng thái từ đã thanh toán sang chưa thanh toán'
+            ], 400);
+        }
+
         $invoice->update($validatedData);
 
         return response()->json([
@@ -114,6 +121,7 @@ class InvoiceController extends Controller
             'data'    => $invoice->load('contract', 'utility')
         ], 200);
     }
+    
     public function deleteInvoice($id)
     {
         $invoice = Invoice::find($id);
