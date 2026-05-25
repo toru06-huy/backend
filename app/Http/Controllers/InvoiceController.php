@@ -121,7 +121,7 @@ class InvoiceController extends Controller
             'data'    => $invoice->load('contract', 'utility')
         ], 200);
     }
-    
+
     public function deleteInvoice($id)
     {
         $invoice = Invoice::find($id);
