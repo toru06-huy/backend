@@ -39,13 +39,24 @@ class TenantController extends Controller
     {
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20|unique:tenants,phone',
-            'identity_card' => 'required|string|max:20|unique:tenants,identity_card',
+            'phone' => 'required|string|max:20',
+            'identity_card' => 'required|string|max:20',
             'address' => 'required|string|max:255',
-        ],[
-                'phone.unique' => 'Số điện thoại đã tồn tại, vui lòng nhập số khác.',
-                'identity_card.unique' => 'Số CMND/CCCD đã tồn tại, vui lòng nhập số khác.',
         ]);
+
+        if (Tenant::where('phone', $validatedData['phone'])->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Số điện thoại đã tồn tại, vui lòng nhập số khác.'
+            ], 400);
+        }
+
+        if (Tenant::where('identity_card', $validatedData['identity_card'])->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Số CMND/CCCD đã tồn tại, vui lòng nhập số khác.'
+            ], 400);
+        }
 
         $tenant = Tenant::create($validatedData);
 
@@ -68,14 +79,31 @@ class TenantController extends Controller
 
         $validatedData = $request->validate([
             'full_name' => 'sometimes|required|string|max:255',
-            'phone' => 'sometimes|required|string|max:20|unique:tenants,phone',
-            'identity_card' => 'sometimes|required|string|max:20|unique:tenants,identity_card',
+            'phone' => 'sometimes|required|string|max:20',
+            'identity_card' => 'sometimes|required|string|max:20',
             'address' => 'sometimes|required|string|max:255',
-        ],[
-            'phone.unique' => 'Số điện thoại đã tồn tại, vui lòng nhập số khác.',
-            'identity_card.unique' => 'Số CMND/CCCD đã tồn tại, vui lòng nhập số khác.',
         ]);
 
+        if (isset($validatedData['phone'])) {
+            $phoneExists = Tenant::where('phone', $validatedData['phone'])->where('id', '!=', $id)->exists();
+            if ($phoneExists) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Số điện thoại đã tồn tại, vui lòng nhập số khác.'
+                ], 400);
+            }
+        }
+
+        if (isset($validatedData['identity_card'])) {
+            $idCardExists = Tenant::where('identity_card', $validatedData['identity_card'])->where('id', '!=', $id)->exists();
+            if ($idCardExists) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Số CMND/CCCD đã tồn tại, vui lòng nhập số khác.'
+                ], 400);
+            }
+        }
+        
         $tenant->update($validatedData);
 
         return response()->json([
