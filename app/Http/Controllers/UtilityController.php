@@ -21,7 +21,7 @@ class UtilityController extends Controller
 
     public function getUtilityDetail($id)
     {
-        $utility = Utility::with('room','invoices')->find($id);
+        $utility = Utility::with('room', 'invoices')->find($id);
 
         if (!$utility) {
             return response()->json([
@@ -61,8 +61,8 @@ class UtilityController extends Controller
             ], 401);
         }
 
-        $room= Room::find($validatedData['room_id']);
-        if(!$room || $room->status !== 'available'){
+        $room = Room::find($validatedData['room_id']);
+        if (!$room || $room->status !== 'available') {
             return response()->json([
                 'success' => false,
                 'message' => 'Phòng không tồn tại hoặc phòng chưa ký hợp đồng'
@@ -111,9 +111,9 @@ class UtilityController extends Controller
                 'message' => 'Chỉ số nước mới phải lớn hơn hoặc bằng chỉ số cũ'
             ], 401);
         }
-        
-        $room= Room::find($validatedData['room_id']);
-        if(!$room){
+
+        $room = Room::find($validatedData['room_id']);
+        if (!$room) {
             return response()->json([
                 'success' => false,
                 'message' => 'Phòng không tồn tại'
