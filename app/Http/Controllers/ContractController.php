@@ -6,11 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\Contract;
 use App\Models\Room;
 use App\Models\Tenant;
+use Carbon\Carbon;
 
 class ContractController extends Controller
 {
+    private function checkEndDay(): void
+    {
+        $contracts = Contract::where('status', 'active')
+            ->where('end_date', '<', Carbon::today())
+            ->with('room')
+            ->get();
+ 
+        foreach ($contracts as $contract) {
+            $contract->update(['status' => 'terminated']);
+            $contract->room?->update(['status' => 'available']);
+        }
+    }
+
     public function getAllContracts()
     {
+        $this->checkEndDay();
         $contracts = Contract::with('room', 'tenant')->get();
 
         return response()->json([
@@ -22,7 +37,7 @@ class ContractController extends Controller
 
     public function getContractDetail($id)
     {
-        $contract = Contract::with('room', 'tenant')->find($id);
+        $contract = Contract::with('room.utilities', 'tenant','invoices')->find($id);
 
         if (!$contract) {
             return response()->json([
@@ -36,6 +51,7 @@ class ContractController extends Controller
             'data'    => $contract
         ], 200);
     }
+
     public function createContract(Request $request)
     {
         $validatedData = $request->validate([
@@ -63,6 +79,7 @@ class ContractController extends Controller
             ], 400);
         }
 
+        $validatedData['status'] = $validatedData['status'] ?? 'active';
         $contract = Contract::create($validatedData);
         $room->update(['status' => 'rented']);
 
@@ -91,6 +108,7 @@ class ContractController extends Controller
             'message' => 'Hợp đồng đã được xóa thành công'
         ], 200);
     }
+
     public function updateContract(Request $request, $id)
     {
         $contract = Contract::find($id);
@@ -101,6 +119,7 @@ class ContractController extends Controller
                 'message' => 'Không tìm thấy hợp đồng'
             ], 404);
         }
+        
         $validatedData = $request->validate([
             'tenant_id'      => 'sometimes|exists:tenants,id',
             'room_id'        => 'sometimes|exists:rooms,id',

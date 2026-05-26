@@ -2,11 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login']);
+
 Route::get('/utilities', [\App\Http\Controllers\UtilityController::class, 'getAllUtilities']);
 Route::get('/utilities/{id}', [\App\Http\Controllers\UtilityController::class, 'getUtilityDetail']);
+Route::post('/utilities', [\App\Http\Controllers\UtilityController::class, 'createUtility']);
+Route::put('/utilities/{id}', [\App\Http\Controllers\UtilityController::class, 'updateUtility']);
+Route::delete('/utilities/{id}', [\App\Http\Controllers\UtilityController::class, 'deleteUtility']);
 
 Route::get('/invoices', [\App\Http\Controllers\InvoiceController::class, 'getAllInvoice']);
 Route::get('/invoices/{id}', [\App\Http\Controllers\InvoiceController::class, 'getInvoiceDetail']); 
+Route::post('/invoices', [\App\Http\Controllers\InvoiceController::class, 'createInvoice']);
+Route::put('/invoices/{id}', [\App\Http\Controllers\InvoiceController::class, 'updateInvoice']);
+Route::delete('/invoices/{id}', [\App\Http\Controllers\InvoiceController::class, 'deleteInvoice']);
 
 Route::get('/contracts', [\App\Http\Controllers\ContractController::class, 'getAllContracts']);
 Route::get('/contracts/{id}', [\App\Http\Controllers\ContractController::class, 'getContractDetail']);
