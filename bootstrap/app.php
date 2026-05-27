@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'invoices/*',
             'utilities', 
             'utilities/*', 
+            '/login',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
