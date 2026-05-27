@@ -67,6 +67,12 @@ class InvoiceController extends Controller
                 'message' => 'Hợp đồng và tiện ích không cùng phòng'
             ], 400);
         }
+        if($contract->status === 'terminated'){
+            return response()->json([
+                'success' => false,
+                'message' => 'Không thể tạo hóa đơn cho hợp đồng đã chấm dứt'
+            ], 400);
+        }
         $invoice = Invoice::create($validatedData);
 
         return response()->json([
